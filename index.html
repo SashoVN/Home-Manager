@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="bg">
+  <head>
+    <meta charset="UTF-8">
+    <title>Вход | Домоуправител</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <script src="app.js" type="module"></script>
+  </head>
+  <body>
+    <main>
+      <section id="login">
+        <div class="login-container">
+        <h2>Добре дошли</h2>
+
+        <form id="loginForm">
+          <div class="input-wrapper">
+            <i class="fas fa-user"></i>
+            <input type="text" id="username" name="username" placeholder="Потребителско име" required />
+          </div>
+
+          <div class="input-wrapper">
+            <i class="fas fa-lock"></i>
+            <input type="password" id="password" name="password" placeholder="Парола" required />
+          </div>
+
+          <button type="submit" id="loginBtn">Вход</button>
+        </form>
+
+        <p id="message"></p>
+      </div>
+      </section>
+
+      <section id="menu">
+        <header class="menu-header">
+          <h1 class="app-title">Home Manager</h1>
+          <button class="logout-btn" id="logoutBtn">Logout</button>
+        </header>
+
+        <div class="menu-container">
+
+          <button class="menu-btn" id="data-btn">
+            <i class="fas fa-database"></i>
+            Въвеждане на данни
+          </button>
+
+          <button class="menu-btn" id="reports-btn">
+            <i class="fas fa-file-alt"></i>
+            Справки
+          </button>
+
+          <button class="menu-btn" id="building-btn">
+            <i class="fas fa-building"></i>
+            Апартаменти
+          </button>
+
+          <button class="menu-btn" id="services-btn">
+            <i class="fas fa-toolbox"></i>
+            Разход
+          </button>
+
+        </div>
+      </section>
+
+      <section id="apartments">
+        <div class="title-row">
+          <h1 class="page-title">Апартаменти</h1>
+          <button id="back-btnAp" class="back-btn">Назад</button>
+        </div>
+
+        <div class="apartments-wrapper">
+
+          <div class="table-container">
+            <table class="apartments-table">
+              <thead>
+                <tr>
+                  <th>Наименование</th>
+                  <th>Етаж</th>
+                  <th>Номер</th>
+                  <th>Брой живущи</th>
+                  <th>Задължения</th>
+                  <th>Брой чипове</th>
+                </tr>
+              </thead>
+
+              <tbody id="tBody">
+              </tbody>
+            </table>
+          </div>
+
+          <div class="actions">
+            <button id="addAps" class="action-btn add">Добавяне</button>
+            <button id="editAps" class="action-btn edit">Редактиране</button>
+            <button id="deleteAps" class="action-btn delete">Изтриване</button>
+          </div>
+
+          <div id="add-modal" class="modal">
+            <div class="modal-content">
+              <h2>Добавяне на апартамент</h2>
+
+              <label>Наименование</label>
+              <input type="text" id="apt-name">
+
+              <label>Етаж</label>
+              <input type="number" id="apt-floor">
+
+              <label>Номер</label>
+              <input type="text" id="apt-number">
+
+              <label>Брой живущи</label>
+              <input type="number" id="apt-people">
+
+              <label>Задължения</label>
+              <input type="number" id="apt-debt">
+
+              <label>Брой чипове</label>
+              <input type="number" id="apt-chip">
+
+              <div class="modal-buttons">
+                <button id="save-apt" class="save-btn">Запази</button>
+                <button id="cancel-apt" class="cancel-btn">Отказ</button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <section id="services">
+        <div class="title-row">
+          <h1 class="page-title">Разходи</h1>
+          <button id="back-btnSer" class="back-btn">Назад</button>
+        </div>
+
+        <div class="apartments-wrapper">
+
+          <div class="table-container">
+            <table class="apartments-table">
+              <thead>
+                <tr>
+                  <th>Наименование</th>
+                  <th>Цена</th>
+                  <th>Тип</th>
+                  <th>Дата</th>
+                </tr>
+              </thead>
+
+              <tbody id="tBodySer">
+              </tbody>
+            </table>
+          </div>
+
+          <div class="actions">
+            <button id="addSer" class="action-btn add">Добавяне</button>
+            <button id="editSer" class="action-btn edit">Редактиране</button>
+            <button id="deleteSer" class="action-btn delete">Изтриване</button>
+          </div>
+
+          <div id="add-modal-Ser" class="modal">
+            <div class="modal-content">
+              <h2>Добавяне на разход</h2>
+
+              <label>Наименование</label>
+              <input type="text" id="ser-name">
+
+              <label>Цена</label>
+              <input type="number" id="ser-price">
+
+              <label>Тип</label>
+              <input type="number" id="ser-type">
+
+              <label>Дата</label>
+              <input type="date" id="ser-date">
+
+              <div class="modal-buttons">
+                <button id="save-ser" class="save-btn">Запази</button>
+                <button id="cancel-ser" class="cancel-btn">Отказ</button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <section id="fees">
+        <div class="title-row">
+          <h1 class="page-title">Въвеждане на данни</h1>
+          <button id="back-btnTax" class="back-btn">Назад</button>
+        </div>
+
+        <div class="fees-header">
+          <button id="generate-btn" class="generate-btn">Генериране на месечни такси</button>
+        </div>
+
+        <div class="fees-wrapper">
+
+          <div class="fees-table-container">
+            <table class="fees-table">
+              <thead>
+                <tr>
+                  <th>Платец</th>
+                  <th>Апартамент</th>
+                  <th>Месец</th>
+                  <th>Година</th>
+                  <th>Цена</th>
+                  <th>Дата</th>
+                </tr>
+              </thead>
+              <tbody id="tBodyTax">
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Дясно меню -->
+          <div class="fees-actions">
+            <button id="taxAddBtn" class="action-btn add">Добавяне</button>
+            <button id="taxPrintBtn" class="action-btn print">Печат</button>
+          </div>
+
+          <div id="add-modal-genTax" class="modal">
+            <div class="modal-content">
+              <h2>Генериране на такси</h2>
+
+              <label>Месец</label>
+              <input type="text" id="taxMonth">
+
+              <label>Година</label>
+              <input type="number" id="taxYear">
+
+              <div class="modal-buttons">
+                <button id="save-tax" class="save-btn">Запази</button>
+                <button id="cancel-tax" class="cancel-btn">Отказ</button>
+              </div>
+            </div>
+          </div>
+
+          <div id="fee-modal" class="modal">
+            <div class="modal-content large">
+
+              <h2>Добавяне на такса</h2>
+
+              <!-- Апартамент -->
+              <label>Апартамент</label>
+              <select id="fee-apartment">
+              </select>
+
+              <!-- Тип такса -->
+              <label>Тип такса</label>
+              <select id="fee-type">
+                <option value="">-- Избери тип такса --</option>
+                <option value="1">Месечни такси</option>
+                <option value="2">Еднократни такси</option>
+              </select>
+
+              <!-- Таблица с неплатени такси -->
+              <label>Неплатени такси</label>
+              <div class="fees-table-wrapper">
+                <table class="modal-table">
+                  <thead>
+                    <tr>
+                      <th>Апартамент</th>
+                      <th>Месец</th>
+                      <th>Година</th>
+                      <th>Стойност</th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody id="unpaid-fees">
+                    <tr>
+                      <td>Ап. 1</td>
+                      <td>Януари</td>
+                      <td>2026</td>
+                      <td>30.00 лв.</td>
+                      <td><input type="checkbox" class="row-check"></td>
+                    </tr>
+                    <tr>
+                      <td>Ап. 1</td>
+                      <td>Февруари</td>
+                      <td>2026</td>
+                      <td>30.00 лв.</td>
+                      <td><input type="checkbox" class="row-check"></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <!-- Платец -->
+              <label>Платец</label>
+              <input type="text" id="payer" placeholder="Име на платец">
+
+              <!-- Бутони -->
+              <div class="modal-buttons">
+                <button id="saveTax" class="save-btn">Запис</button>
+                <button id="endTax" class="cancel-btn" id="close-fee-modal">Отказ</button>
+              </div>
+
+            </div>
+          </div>
+
+
+
+
+
+
+
+
+
+
+
+          
+
+        </div>
+      </section>
+
+
+
+
+      <div id="toast"></div>
+
+    </main>
+    
+    
+  </body>
+</html>
