@@ -272,20 +272,41 @@ app.post('/taxesForAp', authMiddleware, (req, res) => {
     db.query(sql, [apNum, typeFee], (err, results) => {
         if (err) return res.status(500).json({ error: err });
 
-        const taxes = results[0];
-
-
-        res.json({
-            message: "Taxes for apartament has taken successful",
-            taxes: {
-                apNum: taxes.apNum,
-                month: taxes.month,
-                key: taxes.year,
-                price: taxes.price
-            }
-        });
+        res.json(results)
     });
 });
+
+app.post('/addPayDoc', authMiddleware, (req, res) => {
+    const { payer, apNum, price, date } = req.body
+
+    const sql = 'INSERT INTO pay_doc (payer, apNum, price, date) VALUES(?, ?, ?, ?)'
+
+    db.query(sql, [payer, apNum, price, date], (err, result) => {
+        if (err) return res.status(500).json({ error: err });
+
+        res.json({
+            message: 'Pay doc add successfully'
+            // id: result.id
+        })
+
+    })
+})
+
+
+app.post('/taxPay', authMiddleware, (req, res) =>{
+    const { payDate, doc_id } = req.body
+
+    const sql = 'UPDATE taxes SET payDate = ? AND pay = 1 AND doc_id ?'; 
+
+    db.query(sql, [payDate, doc_id], (err, result) => {
+        if (err) return res.status(500).json({ error: err });
+
+        res.json({
+            message: 'Taxes update successfully',
+        })
+    })
+
+})
 
 
 app.listen(3000, () => {

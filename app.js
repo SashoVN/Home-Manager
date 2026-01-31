@@ -32,6 +32,7 @@ document.getElementById("taxAddBtn").addEventListener("click", payTaxeBlock);
 
 
 
+
 //                                      ----DOM----                                   \\
 
 //                                      ----DR----                                   \\
@@ -815,6 +816,7 @@ function backBlockAutoTax() {
 async function payTaxeBlock() {
     document.getElementById("fee-modal").style.display = 'flex';
     document.getElementById("saveTax").addEventListener("click", payTax);
+    document.getElementById("endTax").addEventListener("click", cancelTaxPay);
     const token = sessionStorage.getItem('accessToken');
 
     const newUrl = url + "/apartaments";
@@ -885,41 +887,121 @@ async function payTaxeBlock() {
         } else if (resp.status == 200) {
 
             let data = await resp.json();
-            let data2 = data.taxes
-            console.log(data2);
+            // let data2 = data.price
+            // console.log(data2);
 
             let tBodyPayTax = document.getElementById("unpaid-fees");
             tBodyPayTax.innerHTML = ""
 
-            for (const key in data2) {
-                const apName = document.createElement("td");
-                apName.textContent = `Aп. ${key.apNum}`;
-                const month = document.createElement("td");
-                month.textContent = key.month;
-                const godina = document.createElement("td");
-                godina.textContent = key.year;
-                const price = document.createElement("td");
-                price.textContent = key.price;
+            if (data.length > 0) {
+                for (const key of data) {
+                    const apName = document.createElement("td");
+                    apName.textContent = `Aп. ${key.apNum}`;
+                    const month = document.createElement("td");
+                    month.textContent = key.month;
+                    const godina = document.createElement("td");
+                    godina.textContent = key.year;
+                    const price = document.createElement("td");
+                    price.textContent = key.price;
+                    const checkBoxTd = document.createElement("td");
+                    checkBoxTd.className = 'check-col';
+                    const checkBox = document.createElement("input");
+                    checkBox.type = "checkbox";
+                    checkBox.className = "row-check-small";
+                    checkBoxTd.appendChild(checkBox);
 
-                let tr = document.createElement("tr");
-                tr.appendChild(apName);
-                tr.appendChild(month);
-                tr.appendChild(godina);
-                tr.appendChild(price);
 
-                tBodyTax.appendChild(tr);
+                    let tr = document.createElement("tr");
+                    tr.appendChild(apName);
+                    tr.appendChild(month);
+                    tr.appendChild(godina);
+                    tr.appendChild(price);
+                    tr.appendChild(checkBox);
+
+                    tBodyPayTax.appendChild(tr);
+                }
+
+                document.getElementById("unpaid-tax-table").style.display = 'block';
+
+
+            } else {
+                alert(`Апартамент ${apNum} няма неплатени ${typeFee ? 'Месечни такси' : 'Еднократни такси'}`)
+                cancelTaxPay()
             }
+
+
         }
     });
 
 
 }
 
-
-
-
+function cancelTaxPay() {
+    document.getElementById("fee-modal").style.display = 'none';
+}
 
 async function payTax() {
+    const token = sessionStorage.getItem('accessToken');
+    let allTax = document.querySelectorAll(".row-check-small:checked");
+    const payer = document.getElementById("payer").value;
+    const data = new Date();
+    let totalSum = 0;
+    let apNum = 0;
+
+
+
+    if (allTax.length < 0) {
+        alert('Моля избери такса за плащане!');
+    } else if (payer.length < 1) {
+        alert('Моля напишете името на платеца!');
+    } else {
+
+        for (const el of allTax) {
+            let trEl = el.closest('tr');
+            let alltd = trEl.querySelectorAll('td')
+            totalSum += +alltd[3].textContent;
+            apNum = +alltd[0].textContent.split(". ")[1];
+        }
+
+        const newUrl = url + "/addPayDoc";
+
+        const payDocObj = { payer, apNum, totalSum, data }
+
+        let resp = await fetch(newUrl, {
+            method: 'post',
+            headers: { 'Content-Type': 'application/json', 'X-Authorization': token },
+            body: JSON.stringify(payDocObj),
+        })
+
+        if (resp.status == 403) {
+            alert("Изтекла валидност!")
+            sessionStorage.removeItem('accessToken')
+            sessionStorage.removeItem('userId')
+            homePage();
+        } else if (resp.status !== 200) {
+            alert("Проблем с групирането в документ!");
+        } else if (resp.status === 200) {
+            let idDoc = await resp.json();
+
+            console.log(idDoc);
+
+        }
+
+
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
 
 }
 

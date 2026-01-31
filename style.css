@@ -309,6 +309,40 @@ body {
   font-weight: bold;
 }
 
+
+/* .row-check-small {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 1px;
+  height: 1px;
+  border: 1px solid #b0ff30;
+  border-radius: 1px;
+  cursor: pointer;
+  position: relative;
+  background: transparent;
+  transition: 0.2s;
+}
+
+.row-check-small:hover {
+  box-shadow: 0 0 2px #b0ff30;
+}
+
+.row-check-small:checked {
+  background: #b0ff30;
+}
+
+.row-check-small:checked::after {
+  content: "✔";
+  color: black;
+  font-size: 10px;
+  position: absolute;
+  top: -2px;
+  left: 3px;
+  font-weight: bold;
+} */
+
+
+
 .modal {
   display: none; /* скрито по начало */
   position: fixed;
